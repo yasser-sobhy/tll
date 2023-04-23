@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Settup
 
-Things you may want to cover:
+Both backend and frontend of this app are containerized with docker. To start the app you need to build the images and start the containers
 
-* Ruby version
+```bash
+docker-compose build
+docker-compose up
+```
 
-* System dependencies
+After starting the container you would need to execute database migrations and add some seed data
 
-* Configuration
+```bash
+docker-compose exec web rails db:migrate
+docker-compose exec web rails db:seed
+```
 
-* Database creation
+Also, I am running docker in a local linux server at 192.168.1.7. You would need to:
 
-* Database initialization
+- open `config/initializers/cors.rb` in the backend repo (tll) and change 192.168.1.7:3002 to the host and port where you're running the frontend app, this will be localhost:3002 most likely
+- in the frontend repo, open `.env` file and change `REACT_APP_TLL_ENDPOINT` to point to your backend endpoint. This will also be localhost:3000, most likely
 
-* How to run the test suite
+### Notes
+For the sake of this simple coding challenge:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- No authentication system was provided
+- No multi-tenancy features included
+- No pagination was supported
